@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine untuk Alika Araskia 💖</title>
+
+<!-- ================= GOOGLE FONTS ================= -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Pacifico&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+   
+   /* ===== 3D BOOK SCENE ===== */
+.book-scene {
+  perspective: 2200px;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.book {
+  position: relative;
+  width: 260px;
+  height: 360px;
+  transform-style: preserve-3d;
+}
+
+/* ===== PAGE ===== */
+.page3d {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+
+  transform-origin: left;
+  transform-style: preserve-3d;
+  transition: transform 1s cubic-bezier(.4,.0,.2,1),
+              box-shadow 0.8s;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.08),
+    0 10px 25px rgba(0,0,0,0.2);
+}
+
+.page3d img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ===== FLIPPED ===== */
+.page3d.flipped {
+  transform: rotateY(-180deg);
+  box-shadow:
+    inset 0 0 0 1px rgba(0,0,0,0.05),
+    -10px 10px 20px rgba(0,0,0,0.15);
+}
+
+/* ===== DEPTH ORDER ===== */
+.page3d:nth-child(1) { z-index: 5; }
+.page3d:nth-child(2) { z-index: 4; }
+.page3d:nth-child(3) { z-index: 3; }
+.page3d:nth-child(4) { z-index: 2; }
+.page3d:nth-child(5) { z-index: 1; }
+
+/* ===== BUTTON ===== */
+.flip-controls {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 15px 0;
+}
+
+    /* ===== SLIDE 7 MUSIC & LYRICS ===== */
+.slide7-content{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+    max-width:360px;
+    text-align:center;
+}
+
+.slide7-content img{
+    width:240px;
+    border-radius:22px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.25);
+    animation:float 4s ease-in-out infinite;
+}
+
+.lyrics{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.lyrics .line{
+    opacity:0;
+    transform:translateY(10px);
+    animation:lyricFade 1s ease forwards;
+}
+
+.lyrics .line:nth-child(1){animation-delay:0.5s}
+.lyrics .line:nth-child(2){animation-delay:1.5s}
+.lyrics .line:nth-child(3){animation-delay:2.5s}
+.lyrics .line:nth-child(4){animation-delay:3.5s}
+
+@keyframes lyricFade{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+    /* ===== CENTER PLAYLIST PLAYER ===== */
+.playlist-center{
+    background:#ffffff;
+    width:320px;
+    padding:18px 22px;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.15);
+    cursor:pointer;
+    transition:0.3s;
+    margin-bottom:25px;
+}
+
+.playlist-center:hover{
+    transform:scale(1.05);
+}
+
+.play-btn{
+    width:55px;
+    height:55px;
+    border-radius:50%;
+    background:#ff6b81;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.playlist-center.playing .play-btn{
+    animation:pulse 1.2s infinite;
+}
+
+.playlist-text{
+    display:flex;
+    flex-direction:column;
+}
+
+.playlist-text .title{
+    font-weight:600;
+    color:#d6336c;
+}
+
+.playlist-text .subtitle{
+    font-size:13px;
+    color:#777;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1)}
+    50%{transform:scale(1.15)}
+    100%{transform:scale(1)}
+}
+
+/* =========================================================
+   GLOBAL STYLE
+========================================================= */
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ffe6eb,#fff0f5);
+    overflow:hidden;
+}
+
+.page{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+    display:none;
+    padding:30px;
+    animation:fadeIn 1s ease;
+}
+
+.page.active{
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes float{
+    0%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+    100%{transform:translateY(0)}
+}
+
+@keyframes shake{
+    0%{transform:translateX(0)}
+    25%{transform:translateX(-5px)}
+    50%{transform:translateX(5px)}
+    75%{transform:translateX(-5px)}
+    100%{transform:translateX(0)}
+}
+
+@keyframes typing{
+    from{width:0}
+    to{width:100%}
+}
+
+@keyframes heartsFly{
+    from{transform:translateY(0) scale(1); opacity:1}
+    to{transform:translateY(-100vh) scale(0); opacity:0}
+}
+
+/* =========================================================
+   COMMON COMPONENT
+========================================================= */
+h1,h2{
+    font-family:'Pacifico',cursive;
+    color:#d6336c;
+    text-align:center;
+}
+
+p{
+    color:#555;
+    text-align:center;
+}
+
+.btn{
+    margin-top:25px;
+    padding:12px 28px;
+    border:none;
+    border-radius:30px;
+    background:#ff6b81;
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.1);
+    background:#ff4757;
+}
+
+.nav{
+    position:absolute;
+    bottom:30px;
+    display:flex;
+    gap:15px;
+}
+
+/* =========================================================
+   HEART BACKGROUND
+========================================================= */
+.heart{
+    position:absolute;
+    bottom:-20px;
+    font-size:20px;
+    animation:heartsFly 6s linear infinite;
+    opacity:0.7;
+}
+
+/* =========================================================
+   PAGE 1 - OPENING
+========================================================= */
+#page1 h1{
+    font-size:42px;
+}
+
+.typing{
+    overflow:hidden;
+    white-space:nowrap;
+    border-right:3px solid pink;
+    animation:typing 3s steps(30,end);
+}
+
+/* =========================================================
+   PAGE 2 - KEYLOCK
+========================================================= */
+.lock-box{
+    background:white;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+    text-align:center;
+}
+
+.lock-box input{
+    margin-top:15px;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    text-align:center;
+}
+
+/* =========================================================
+   PAGE 3 - LETTER
+========================================================= */
+.letter{
+    background:#fff;
+    padding:30px;
+    border-radius:20px;
+    max-width:600px;
+    max-height:70vh;
+    overflow-y:auto;
+    animation:float 4s ease-in-out infinite;
+}
+
+/* =========================================================
+   PAGE 4 - TIMELINE
+========================================================= */
+.timeline{
+    max-width:600px;
+}
+
+.timeline div{
+    background:white;
+    padding:15px;
+    margin:10px 0;
+    border-radius:15px;
+    animation:fadeIn 1s ease;
+}
+
+/* =========================================================
+   PAGE 5 - GAME
+========================================================= */
+.quiz{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    width:320px;
+}
+
+.quiz button{
+    width:100%;
+    margin-top:10px;
+}
+
+/* =========================================================
+   PAGE 6 - SURPRISE
+========================================================= */
+.gift{
+    width:150px;
+    height:150px;
+    background:#ff6b81;
+    border-radius:20px;
+    animation:float 2s infinite;
+    cursor:pointer;
+}
+
+/* =========================================================
+   PAGE 7 - MUSIC
+========================================================= */
+.music-box{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+}
+
+/* =========================================================
+   PAGE 8 - ENDING
+========================================================= */
+#page8 h1{
+    font-size:48px;
+}
+
+
+</style>
+</head>
+
+<body>
+    
+
+<!-- ================= AUDIO ================= --> 
+ <audio id="musicMain" src="manis.mp3.mp3"></audio> 
+ <audio id="musicSoft" src="music/soft.mp3"></audio> 
+ <audio id="musicHappy" src="music/happy.mp3"></audio>
+
+
+
+<section class="page active" id="page1">
+    <h1 class="typing">Hallo Alika Araskia 💖</h1>
+    <p style="margin:15px 0 30px">
+        Udah siap belum ini sama hadiah Valentine dari Malik?
+    </p>
+
+
+    <!-- PLAYLIST PLAYER -->
+    <div class="playlist-center" onclick="toggleMainMusic()">
+        <div class="play-btn" id="playBtn">▶</div>
+        <div class="playlist-text">
+            <span class="title">KOTA INI TAK SAMA</span>
+            <span class="subtitle">For Alika Araskia 💖</span>
+        </div>
+    </div>
+
+    <button class="btn" onclick="startValentine()">Mulai 💌</button>
+</section>
+
+
+<!-- ================= PAGE 2 ================= -->
+<section class="page" id="page2">
+    <div class="lock-box" id="lockBox">
+        <h2>🔒 TEBAK APA HAYOO</h2>
+        <p>Hint: TANGGAL VALENTINE INI ❤️</p>
+        <input type="password" id="password" placeholder="Masukkan sandi">
+        <button class="btn" onclick="checkPassword()">Unlock 💖</button>
+        <p id="lockMsg"></p>
+    </div>
+    <div class="nav">
+        <button class="btn" onclick="back()">Back</button>
+        <button class="btn" id="nextLock" onclick="next()" disabled>Next</button>
+    </div>
+</section>
+
+<!-- ================= PAGE 3 ================= -->
+<section class="page" id="page3">
+    <div class="letter">
+        <h2>💌 Surat untukmu</h2>
+        <p>
+            Alika Araskia,<br><br>
+            Dari sekian banyak hari,
+            kamu adalah alasan kenapa hari-hariku terasa lebih indah.
+            Terima kasih sudah hadir, tertawa, dan menemani.
+            Aku harap Valentine ini bisa membuatmu tersenyum.
+            <br><br>
+            Aku berharap kamu tumbuh jadi seseorang yang penuh ambisi.
+            Kamu menjadi seseorang yang penuh prinsip dalam hidupnya,
+            kamu gabole jadi orang yang labill??? okee???,
+            kamu gabole bingung sama diri kamuuu sendirii.
+            <br><br>
+            Aku bakal selalu ngingetin kamuu kalo perasaan 
+            aku ke kamu besar bangett.Kamu orang yang Berhasil,
+            bikin aku seberusaha ini buat cinta, jadi aku bakal
+            kasih yang aku bisa buat kamu, karena AKU GAMAU MENCINTAI
+            SETENGAH TENGAH, aku bakal mencintai kamu dengan caraku
+            sendirii sampe aku capee (KECUALI FEEDBACK YANG AKU DAPAT DARI KAMU 
+            SESUAI SAMA APA YANG AKU INGINKAN, ITU GABAKAL BIKIN AKU 
+            CAPEE SII) TAPI BUAT SEKRANG INI, AKU MAU NGASIH SEBAIK 
+            MUNGKIN BUAT KAMU, AKU MAU KAMU BAHAGIA DAN NGERASAIN
+            SEMUA USAHA AKUU HEHEE.
+            <br><br>
+            TETEP JADI DIRI KAMU YAH AL, KALO SESEORANG YANG KAMU CINTA 
+            GABISA BIKIN KAMU BERUBAH GAPAPA, KALO SESEORANG YANG 
+            MENCINTAI KAMU UDA BRUSAHA NGEBILANGIN APA YANG IA INGINKAN,
+            TAPI KAMU TETEP GABISA, ITS OKEEY, KAMU PUNYA HAK BUAT NOLAK ITU.
+            TOLONG JANGAN PERNAH ANGGAP AKU ORANG JAHAT YAH AL??, KARENA 
+            DIRIKU SENDIRI SELALU PENGEN YANG TERBAIK BUAT KAMUU.
+            LOAFYUU AL
+            <br><br>
+            Dengan sepenuh hati,<br>
+            Malik ❤️
+        </p>
+    </div>
+    <div class="nav">
+        <button class="btn" onclick="back()">Back</button>
+        <button class="btn" onclick="next()">Next</button>
+    </div>
+</section>
+
+<section class="page" id="page4">
+  <h2>📘 FLIPBOOK ALIKA ARASKIA</h2>
+
+  <div class="book-scene">
+    <div class="book" id="book">
+
+      <!-- PAGE 1 -->
+      <div class="page3d">
+        <img src="alika1.jpg">
+      </div>
+
+      <!-- PAGE 2 -->
+      <div class="page3d">
+        <img src="alika 2.jpg">
+      </div>
+
+      <!-- PAGE 3 -->
+      <div class="page3d">
+        <img src="alika3.jpg">
+      </div>
+
+      <!-- PAGE 4 -->
+      <div class="page3d">
+        <img src="alika4.jpg">
+      </div>
+
+      <!-- PAGE 5 -->
+      <div class="page3d">
+        <img src="alikatrkir.jpg">
+      </div>
+
+    </div>
+  </div>
+
+  <div class="flip-controls">
+    <button class="btn" onclick="bookPrev()">⬅</button>
+    <button class="btn" onclick="bookNext()">➡</button>
+  </div>
+
+  <div class="nav">
+    <button class="btn" onclick="back()">Back</button>
+    <button class="btn" onclick="next()">Next</button>
+  </div>
+</section>
+
+
+
+<!-- ================= PAGE 5 ================= -->
+<section class="page" id="page5">
+    <div class="quiz">
+        <h2>Seberapa Kenal Kamu Sama Malik? 😆</h2>
+        <p id="question"></p>
+        <div id="answers"></div>
+    </div>
+    <div class="nav">
+        <button class="btn" onclick="back()">Back</button>
+    </div>
+</section>
+
+<section class="page" id="page6">
+    
+
+    <div class="gift" id="love" onclick="openGift()"></div>
+
+    <!-- FOTO SURPRISE -->
+    <div class="surprise-content" id="surpriseContent">
+        <img src="stiker2.gif" alt="Foto Kita">
+        <p>
+            Ini bukan hadiah mahal,<br>
+            tapi ini bagian dari aku<br>
+            yang harus selalu kamu ingat 💖
+            LOAFYUUUUU
+        </p>
+    </div>
+
+    <div class="nav">
+        <button class="btn" onclick="back()">Back</button>
+        <button class="btn" onclick="next()">Next</button>
+    </div>
+</section>
+
+<!-- ================= PAGE 7 ================= -->
+<section class="page" id="page7">
+    <h2>Untuk Kamu</h2>
+
+    <div class="slide7-content">
+        <img src="floweralika.jpg" alt="Foto Spesial">
+
+        <div class="lyrics">
+            <p class="line">Mungkin aku bukan yang sempurna</p>
+            <p class="line">Tapi setiap rasa ini nyata</p>
+            <p class="line">Kalau suatu hari kamu ragu</p>
+            <p class="line">Ingat, aku selalu di sini untukmu</p>
+        </div>
+
+        <button class="btn" onclick="toggleSlide7Music()">▶ Putar Lagu</button>
+    </div>
+
+    <div class="nav">
+        <button class="btn" onclick="back()">Back</button>
+        <button class="btn" onclick="next()">Next</button>
+    </div>
+</section>
+
+
+
+
+    
+
+<!-- ================= PAGE 8 ================= -->
+<section class="page" id="page8">
+    <h1>Happy Valentine Day ❤️</h1>
+    <p>SEMOGAAA KAMUUUU SUKAAAA YAHHHH SAMAAAAA HADIAHNYAAAA</p>
+    <button class="btn" onclick="restart()">Ulangi dari Awal</button>
+</section>
+
+  
+<script>
+let currentPage = 1;
+const totalPage = 8;
+
+/* ================= PAGE NAV ================= */
+function showPage(){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+currentPage).classList.add('active');
+}
+
+function next(){
+    if(currentPage < totalPage){
+        currentPage++;
+        showPage();
+    }
+}
+
+function back(){
+    if(currentPage > 1){
+        currentPage--;
+        showPage();
+    }
+}
+
+/* ================= MUSIK PAGE 1 ================= */
+let musicStarted = false;
+
+function startValentine(){
+    const music = document.getElementById('musicMain');
+
+    if(!musicStarted){
+        music.volume = 0;
+        music.play();
+        musicStarted = true;
+
+        let vol = 0;
+        const fade = setInterval(()=>{
+            if(vol < 1){
+                vol += 0.05;
+                music.volume = vol;
+            } else {
+                clearInterval(fade);
+            }
+        }, 200);
+    }
+
+    currentPage = 2;
+    showPage();
+}
+
+/* ================= KEYLOCK ================= */
+function checkPassword(){
+    const pass = document.getElementById('password').value;
+    const msg  = document.getElementById('lockMsg');
+    const box  = document.getElementById('lockBox');
+
+    if(pass === "1402"){
+        msg.innerHTML = "💖 Berhasil dibuka!";
+        box.style.transform = "scale(1.05)";
+        box.style.transition = "0.3s";
+
+        // LANGSUNG PINDAH KE PAGE 3
+        setTimeout(()=>{
+            currentPage = 3;
+            showPage();
+        }, 800);
+
+    } else {
+        msg.innerHTML = "😝 Salah, coba lagi";
+        box.style.animation = "shake 0.4s";
+        setTimeout(()=>box.style.animation="",400);
+    }
+}
+
+/* ================= QUIZ ================= */
+const quiz = [
+ {q:"Malik paling suka apa?",a:["Kopi","Kamu","Tidur"],c:1},
+ {q:"Malik orangnya?",a:["Cuex","Romantis","Galak"],c:1},
+ {q:"Valentine ini spesial?",a:["Biasa","Banget","Kurang"],c:1}
+];
+let qi = 0, score = 0;
+
+function loadQuiz(){
+    if(qi >= quiz.length){
+        document.getElementById('answers').innerHTML =
+        "<button class='btn' onclick='next()'>Next 💖</button>";
+        return;
+    }
+
+    document.getElementById('question').innerText = quiz[qi].q;
+    document.getElementById('answers').innerHTML = "";
+
+    quiz[qi].a.forEach((x,i)=>{
+        const b = document.createElement('button');
+        b.className = "btn";
+        b.innerText = x;
+        b.onclick = ()=>{
+            if(i === quiz[qi].c) score++;
+            qi++;
+            loadQuiz();
+        };
+        document.getElementById('answers').appendChild(b);
+    });
+}
+loadQuiz();
+
+/* ================= GIFT ================= */
+function openGift(){
+    document.getElementById('giftText').innerHTML =
+    "🍫 SilverQueen & 🌸 bunga untukmu 💝";
+    document.getElementById('musicHappy').play();
+}
+
+/* ================= MUSIC PAGE 7 ================= */
+function toggleMusic(){
+    const m = document.getElementById('musicSoft');
+    m.paused ? m.play() : m.pause();
+}
+
+/* ================= RESTART ================= */
+function restart(){
+    currentPage = 1;
+    showPage();
+}
+let isPlaying = false;
+const music = document.getElementById('musicMain');
+const player = document.querySelector('.playlist-center');
+const playBtn = document.getElementById('playBtn');
+
+function toggleMainMusic(){
+    if(!isPlaying){
+        music.play();
+        playBtn.innerHTML = "❚❚";
+        player.classList.add('playing');
+        isPlaying = true;
+    }else{
+        music.pause();
+        playBtn.innerHTML = "▶";
+        player.classList.remove('playing');
+        isPlaying = false;
+    }
+}
+let slide7Playing = false;
+const music7 = document.getElementById('musicSlide7');
+
+function toggleSlide7Music(){
+    if(!slide7Playing){
+        music7.play();
+        slide7Playing = true;
+    }else{
+        music7.pause();
+        slide7Playing = false;
+    }
+}
+let bookIndex = 0;
+const bookPages = document.querySelectorAll("#book .page3d");
+
+function bookNext() {
+  if (bookIndex < bookPages.length) {
+    bookPages[bookIndex].classList.add("flipped");
+    bookIndex++;
+  }
+}
+
+function bookPrev() {
+  if (bookIndex > 0) {
+    bookIndex--;
+    bookPages[bookIndex].classList.remove("flipped");
+  }
+}
+function toggleSlide7Music(){
+    const music = document.getElementById("musicSlide7");
+    const btn = document.querySelector("#page7 .music-player");
+
+    if(music.paused){
+        stopAllMusic();
+        music.play();
+        btn.innerHTML = "⏸";
+    }else{
+        music.pause();
+        btn.innerHTML = "▶";
+    }
+}
+
+
+</script>
+
+
+
+
+
+
+           
